@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+up() {
+  echo "Starting Krakend..."
+  docker pull devopsfaith/krakend
+  docker run -d -p 8080:8080 \
+  -v $PWD:/etc/krakend/ \
+  --name creasc-gateway-api devopsfaith/krakend
+
+  echo "See sample results on: http://localhost:8080/test"
+}
+
+down() {
+  echo "Stopping Gateway-api..."
+  docker stop creasc-gateway-api
+  docker rm creasc-gateway-api
+}
+
+case $1 in
+  up)
+    up
+    ;;
+  down)
+    down
+    ;;
+  *)
+    echo "Usage: $0 {up|down}"
+    ;;
+esac
+  
